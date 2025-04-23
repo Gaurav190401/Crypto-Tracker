@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 extension HomeView {
     var header: some View {
@@ -72,8 +73,8 @@ extension HomeView {
     var loadingView: some View {
         VStack {
             Spacer()
-            ProgressView("Loading Coins...")
-                .progressViewStyle(CircularProgressViewStyle())
+            LottieView(animation: .named("crypto-loader-animation"))
+                .looping()
             Spacer()
         }
     }
@@ -81,8 +82,9 @@ extension HomeView {
     var nodataView: some View {
         VStack {
             Spacer()
-            Text("No Coins Found!")
-                .foregroundColor(.gray)
+            LottieView(animation: .named("no-data-animation"))
+                .looping()
+                .frame(width: 200, height: 200)
             Spacer()
         }
     }

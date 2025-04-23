@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CoinCardView: View {
     let coin: CoinModel
@@ -13,14 +14,15 @@ struct CoinCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
-                AsyncImage(url: URL(string: coin.image)) { image in
-                    image.resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 40)
-                } placeholder: {
-                    Circle().fill(Color.gray.opacity(0.25))
-                        .frame(width: 40, height: 40)
-                }
+                KFImage(URL(string: coin.image))
+                    .resizable()
+                    .placeholder {
+                        Circle()
+                            .fill(Color.gray.opacity(0.25))
+                            .frame(width: 40, height: 40)
+                    }
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
                 Spacer()
                 Text(coin.symbol.uppercased())
                     .font(.subheadline)

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct CoinRowView: View {
     
@@ -30,15 +31,15 @@ extension CoinRowView {
                 .font(.caption)
                 .foregroundColor(Color.gray)
                 .frame(minWidth: 30)
-            AsyncImage(url: URL(string: coin.image)) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
-            } placeholder: {
-                Circle().fill(Color.gray.opacity(0.25))
-                    .frame(width: 30, height: 30)
-            }
+            KFImage(URL(string: coin.image))
+                .resizable()
+                .placeholder {
+                    Circle()
+                        .fill(Color.gray.opacity(0.25))
+                        .frame(width: 30, height: 30)
+                }
+                .scaledToFit()
+                .frame(width: 30, height: 30)
             Text(coin.symbol.uppercased())
                 .font(.headline)
                 .padding(.leading, 6)
