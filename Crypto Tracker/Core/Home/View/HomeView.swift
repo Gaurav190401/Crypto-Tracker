@@ -25,11 +25,7 @@ struct HomeView: View {
                     if vm.filteredCoins.isEmpty && !vm.isLoading  {
                         nodataView
                     } else {
-                        if vm.listingType {
-                            coinsList
-                        } else {
-                            coinsGrid
-                        }
+                        refreshableContentView
                     }
                 }
                 .navigationBarHidden(true)

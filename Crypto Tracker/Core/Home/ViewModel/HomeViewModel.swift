@@ -19,6 +19,7 @@ class HomeViewModel: ObservableObject {
     @Published var selectedCoin: CoinModel? = nil
     @Published var showDetailView = false
     @Published var listingType = true
+    @Published var isRefreshing: Bool = false
     
     // MARK: - Private Properties
     let columns: [GridItem] = [
@@ -35,21 +36,33 @@ class HomeViewModel: ObservableObject {
     }
     
     // MARK: - Fetch Coins
-    private func fetchAllCoins() {
-        isLoading = true
+    func fetchAllCoins(isRefresh: Bool = false) {
+        setLoading(isRefresh: isRefresh, true)
         apiManager.getCoins()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
-                self?.isLoading = false
+                guard let self else { return }
+                self.setLoading(isRefresh: isRefresh, false)
+
                 if case let .failure(error) = completion {
                     print("Error fetching coins: \(error)")
                 }
             } receiveValue: { [weak self] coins in
-                self?.isLoading = false
-                self?.allCoins = coins
-                self?.filteredCoins = coins
+                guard let self else { return }
+                self.setLoading(isRefresh: isRefresh, false)
+
+                self.allCoins = coins
+                self.filteredCoins = coins
             }
             .store(in: &cancellables)
+    }
+
+    private func setLoading(isRefresh: Bool, _ value: Bool) {
+        if isRefresh {
+            isRefreshing = value
+        } else {
+            isLoading = value
+        }
     }
     
     // MARK: - Search Filtering

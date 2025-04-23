@@ -60,8 +60,8 @@ struct CoinCardView: View {
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(.white)
+        .background(.background)
         .cornerRadius(12)
-        .shadow(color: Color.black.opacity(0.25), radius: 5, x: 0, y: 2)
+        .shadow(color: .primary.opacity(0.25), radius: 5, x: 0, y: 2)
     }
 }

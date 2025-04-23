@@ -39,6 +39,7 @@ extension HomeView {
                 }
         }
         .listStyle(PlainListStyle())
+        .scrollIndicators(.hidden)
         .animation(.bouncy, value: vm.filteredCoins)
     }
     
@@ -86,6 +87,20 @@ extension HomeView {
                 .looping()
                 .frame(width: 200, height: 200)
             Spacer()
+        }
+    }
+    
+    var refreshableContentView: some View {
+        VStack(spacing: 0) {
+            if vm.listingType {
+                coinsList
+            } else {
+                coinsGrid
+            }
+        }
+        .refreshable {
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            vm.fetchAllCoins(isRefresh: true)
         }
     }
 }
