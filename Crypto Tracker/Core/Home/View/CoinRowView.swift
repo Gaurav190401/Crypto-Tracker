@@ -27,10 +27,6 @@ extension CoinRowView {
     
     private var leftColumn: some View {
         HStack(spacing: 0) {
-            Text("\(coin.rank)")
-                .font(.caption)
-                .foregroundColor(Color.gray)
-                .frame(minWidth: 30)
             KFImage(URL(string: coin.image))
                 .resizable()
                 .placeholder {
@@ -45,6 +41,7 @@ extension CoinRowView {
                 .padding(.leading, 6)
                 .foregroundColor(Color.blue)
         }
+        .padding(.leading, 8)
     }
     
     private var rightColumn: some View {

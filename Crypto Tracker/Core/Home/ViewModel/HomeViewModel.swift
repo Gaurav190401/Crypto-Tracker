@@ -52,7 +52,6 @@ class HomeViewModel: ObservableObject {
                 self.setLoading(isRefresh: isRefresh, false)
 
                 self.allCoins = coins
-                self.filteredCoins = coins
             }
             .store(in: &cancellables)
     }
@@ -68,7 +67,6 @@ class HomeViewModel: ObservableObject {
     // MARK: - Search Filtering
     private func addSearchSubscriber() {
         $searchText
-            .debounce(for: .milliseconds(600), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .combineLatest($allCoins)
             .map { (text, coins) in
