@@ -58,27 +58,6 @@ extension HomeView {
         }
         .scrollIndicators(.hidden)
     }
-
-    var columnHeaders: some View {
-        HStack {
-            Text("Coin")
-            Spacer()
-            Text("Price")
-                .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
-        }
-        .font(.caption)
-        .foregroundColor(.gray)
-        .padding(.horizontal)
-    }
-    
-    var loadingView: some View {
-        VStack {
-            Spacer()
-            LottieView(animation: .named("crypto-loader-animation"))
-                .looping()
-            Spacer()
-        }
-    }
     
     var nodataView: some View {
         VStack {

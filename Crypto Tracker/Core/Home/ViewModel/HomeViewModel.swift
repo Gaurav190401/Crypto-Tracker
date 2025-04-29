@@ -26,7 +26,7 @@ class HomeViewModel: ObservableObject {
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
-    private let apiManager = APIManager()
+    private let apiManager = APIManager.shared
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Init

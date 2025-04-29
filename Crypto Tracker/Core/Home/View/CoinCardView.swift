@@ -24,10 +24,9 @@ struct CoinCardView: View {
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                 Spacer()
-                Text(coin.symbol.uppercased())
-                    .font(.subheadline)
-                    .lineLimit(1)
-                    .foregroundColor(.gray)
+                if let prices = coin.sparklineIn7D?.price {
+                    MiniSparklineChartView(rawPrices: prices)
+                }
             }
 
             Text(coin.name)

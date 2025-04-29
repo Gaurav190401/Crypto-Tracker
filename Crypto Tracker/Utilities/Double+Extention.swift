@@ -29,7 +29,6 @@ extension Double {
     /// ```
     func asCurrencyWith6Decimals() -> String {
         let formatter = NumberFormatter()
-//        formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 6
         
@@ -50,5 +49,47 @@ extension Double {
     /// ```
     func asPercentString() -> String {
         return asNumberString() + "%"
+    }
+    
+    /// Converts a Double into a Currency with 2 decimal places
+    /// ```
+    /// Convert 1234.56 to $1,234.56
+    /// ```
+    func formatAsCurrency() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        
+        let number = NSNumber(value: self)
+        return formatter.string(from: number) ?? "0.00"
+    }
+    
+    /// Converts a Double to a String with K, M, Bn, Tr abbreviations.
+    /// ```
+    /// Convert 1234.56 to "1.23K"
+    /// ```
+    func formattedWithAbbreviations() -> String {
+        let num = abs(self)
+        let sign = (self < 0) ? "-" : ""
+        
+        switch num {
+            case 1_000_000_000_000...:
+                let formatted = num / 1_000_000_000_000
+                return "\(sign)\(formatted.formatAsCurrency())T"
+            case 1_000_000_000...:
+                let formatted = num / 1_000_000_000
+                return "\(sign)\(formatted.formatAsCurrency())B"
+            case 1_000_000...:
+                let formatted = num / 1_000_000
+                return "\(sign)\(formatted.formatAsCurrency())M"
+            case 1_000...:
+                let formatted = num / 1_000
+                return "\(sign)\(formatted.formatAsCurrency())K"
+            case 0...:
+                return self.formatAsCurrency()
+            default:
+                return "\(sign)\(self)"
+        }
     }
 }

@@ -17,31 +17,35 @@ struct CoinRowView: View {
         HStack(spacing: 0) {
             leftColumn
             Spacer()
+            if let price = coin.sparklineIn7D?.price {
+                MiniSparklineChartView(rawPrices: price)
+                    .frame(width: 60)
+            }
             rightColumn
         }
         .font(.subheadline)
+        .padding(.horizontal, 16)
+        .contentShape(Rectangle())
     }
 }
 
 extension CoinRowView {
     
     private var leftColumn: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 8) {
             KFImage(URL(string: coin.image))
                 .resizable()
                 .placeholder {
                     Circle()
                         .fill(Color.gray.opacity(0.25))
-                        .frame(width: 30, height: 30)
+                        .frame(width: 35, height: 35)
                 }
                 .scaledToFit()
-                .frame(width: 30, height: 30)
+                .frame(width: 35, height: 35)
             Text(coin.symbol.uppercased())
                 .font(.headline)
                 .padding(.leading, 6)
-                .foregroundColor(Color.blue)
         }
-        .padding(.leading, 8)
     }
     
     private var rightColumn: some View {
@@ -68,6 +72,5 @@ extension CoinRowView {
             }
         }
         .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
-        .padding(.trailing, 8)
     }
 }
